@@ -1,13 +1,17 @@
 version: "3.8"
 services:
   database-mysql:
-    image: mysql
+    image: mysql:8.0.26
     container_name: mysql-forum
     environment:
       MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - mysql:/var/lib/mysql
   web-app:
     build: .
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - database-mysql
+volumes:
+  mysql:
