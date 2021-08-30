@@ -33,9 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/actuator/**").hasRole(ADMIN)
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .and()
-                .httpBasic();
+                .formLogin().disable().httpBasic().disable();
     }
 
     @Bean
