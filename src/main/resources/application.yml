@@ -26,4 +26,4 @@ logging:
     root: info
     com.weitheshinobi.forum: debug
   file:
-    name: log/forum-log.log
+    name: log/forum.log

@@ -3,6 +3,7 @@ package com.weitheshinobi.forum.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,12 +29,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String adminPassword;
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .mvcMatchers("/actuator/**").hasRole(ADMIN)
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().disable().httpBasic().disable();
+                .formLogin()
+                .and()
+                .httpBasic();
     }
 
     @Bean
