@@ -3,7 +3,9 @@ package com.weitheshinobi.forum.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -18,6 +20,9 @@ public class Board {
     @GeneratedValue
     private Long id;
     private String boradName;
+
+    @OneToMany(mappedBy = "board")
+    private List<Article> articles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "followingBoard")
     private Set<User> followers = new HashSet<>();

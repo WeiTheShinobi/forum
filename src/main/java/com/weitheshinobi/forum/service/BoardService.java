@@ -5,6 +5,8 @@ import com.weitheshinobi.forum.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -21,9 +23,19 @@ public class BoardService {
         return boardRepository.findByBoradNameLike("%" + boardNameQuery + "%");
     }
 
+    @Transactional
     public Board createBoard(String boardName) {
         Board board = new Board();
         board.setBoradName(boardName);
         return boardRepository.save(board);
     }
+
+    @Transactional
+    public Board updateBoard(Long id, String boardName) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
+        board.setBoradName(boardName);
+        return boardRepository.save(board);
+    }
+
 }

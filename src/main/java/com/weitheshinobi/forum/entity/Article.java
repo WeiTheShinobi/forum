@@ -29,6 +29,9 @@ public class Article {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Board board;
+
     @OneToMany(mappedBy = "article")
     private List<Comment> comments = new ArrayList<>();
 
