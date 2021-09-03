@@ -1,5 +1,7 @@
-package com.weitheshinobi.forum.entity;
+package com.weitheshinobi.forum.board;
 
+import com.weitheshinobi.forum.article.Article;
+import com.weitheshinobi.forum.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,15 +18,27 @@ public class Board {
 
     // ID 討論版名 討論版文章 版主
 
+    protected Board() {
+    }
+
+    public Board(String boradName, boolean isOpen) {
+        this.boradName = boradName;
+        this.isOpen = isOpen;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String boradName;
+    @Column(nullable = false)
+    private boolean isOpen;
 
     @OneToMany(mappedBy = "board")
     private List<Article> articles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "followingBoard")
     private Set<User> followers = new HashSet<>();
+
 
 }

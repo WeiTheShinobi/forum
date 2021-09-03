@@ -1,7 +1,5 @@
-package com.weitheshinobi.forum.service;
+package com.weitheshinobi.forum.board;
 
-import com.weitheshinobi.forum.entity.Board;
-import com.weitheshinobi.forum.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +23,16 @@ public class BoardService {
 
     @Transactional
     public Board createBoard(String boardName) {
-        Board board = new Board();
-        board.setBoradName(boardName);
+        Board board = new Board(boardName, true);
         return boardRepository.save(board);
     }
 
     @Transactional
-    public Board updateBoard(Long id, String boardName) {
+    public Board updateBoard(Long id, String boardName, boolean isOpen) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id.toString()));
         board.setBoradName(boardName);
+        board.setOpen(isOpen);
         return boardRepository.save(board);
     }
 

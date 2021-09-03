@@ -1,8 +1,12 @@
-package com.weitheshinobi.forum.entity;
+package com.weitheshinobi.forum.article;
 
+import com.weitheshinobi.forum.board.Board;
+import com.weitheshinobi.forum.comment.Comment;
+import com.weitheshinobi.forum.user.User;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.*;
@@ -11,9 +15,12 @@ import java.util.*;
 @Data
 @Entity
 @Table(name = "forum_article")
+@EntityListeners(AuditingEntityListener.class)
 public class Article {
 
     // ID 文章標題 文章作者 文章內容 文章標籤 討論版 創建時間 最後編輯時間 文章留言 推 噓
+
+
 
     @Id
     @GeneratedValue
@@ -21,10 +28,12 @@ public class Article {
     private String title;
     @Column(columnDefinition = "LONGTEXT")
     private String content;
+    private boolean isOpen;
     @CreatedDate
-    private Date createdTime;
+    private Date createdDate;
     @LastModifiedDate
-    private Date modifiedTime;
+    private Date modifiedDate;
+
 
     @ManyToOne
     private User user;

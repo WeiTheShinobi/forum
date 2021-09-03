@@ -1,4 +1,4 @@
-package com.weitheshinobi.forum.controller;
+package com.weitheshinobi.forum.router;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

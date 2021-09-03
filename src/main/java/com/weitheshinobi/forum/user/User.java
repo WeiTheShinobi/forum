@@ -1,7 +1,12 @@
-package com.weitheshinobi.forum.entity;
+package com.weitheshinobi.forum.user;
 
+import com.weitheshinobi.forum.article.Article;
+import com.weitheshinobi.forum.board.Board;
+import com.weitheshinobi.forum.comment.Comment;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.*;
@@ -10,6 +15,7 @@ import java.util.*;
 @Data
 @Entity
 @Table(name = "forum_user")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     // 用戶 文章 討論版 文章 追蹤的文章 追蹤討論版 留言 版主
@@ -24,8 +30,10 @@ public class User {
     private String nickname;
     private String email;
     private String password;
+    @CreatedDate
+    private Date createdDate;
     @LastModifiedDate
-    private Date lastOnlineTime;
+    private Date lastOnlineDate;
 
     @OneToMany(mappedBy = "user")
     private List<Article> yourArticles = new ArrayList<>();

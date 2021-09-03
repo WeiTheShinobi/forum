@@ -1,6 +1,5 @@
-package com.weitheshinobi.forum.repository;
+package com.weitheshinobi.forum.board;
 
-import com.weitheshinobi.forum.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
