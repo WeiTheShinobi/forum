@@ -2,18 +2,14 @@ package com.weitheshinobi.forum.service;
 
 import com.weitheshinobi.forum.entity.Board;
 import com.weitheshinobi.forum.repository.BoardRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Slf4j
-@Transactional
 public class BoardService {
 
     @Autowired
@@ -32,20 +28,27 @@ public class BoardService {
         return boardRepository.findByBoardNameLike("%" + boardNameQuery + "%");
     }
 
+    @Transactional
     public Board createBoard(String boardName) {
-        Board board = new Board(boardName, true);
-        return boardRepository.save(board);
+        return boardRepository.save(new Board(boardName, true));
     }
 
-    public Optional<Board> updateBoard(String queryName, String boardName, boolean isOpen) {
-        Optional<Board> byBoardName = boardRepository.findByBoardName(queryName);
-        if (byBoardName.isPresent()) {
-            Board board = byBoardName.get();
-            board.setBoardName(boardName);
-            board.setOpen(isOpen);
-            return Optional.of(board);
-        }
-        return byBoardName;
+    /**
+     * @param queryName query board
+     * @param newName set board's new name
+     * @param isOpen set board's open state
+     * @return is Success
+     */
+
+    @Transactional
+    public boolean updateBoard(String queryName, String newName, boolean isOpen) {
+        Optional<Board> boardOptional = boardRepository.findByBoardName(queryName);
+        boardOptional.ifPresent(
+                board -> {
+                    board.setBoardName(newName);
+                    board.setOpen(isOpen);
+                });
+        return boardOptional.isPresent();
     }
 
 }

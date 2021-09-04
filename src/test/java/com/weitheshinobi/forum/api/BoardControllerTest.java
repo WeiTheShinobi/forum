@@ -1,4 +1,4 @@
-package com.weitheshinobi.forum.controller;
+package com.weitheshinobi.forum.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weitheshinobi.forum.entity.Board;

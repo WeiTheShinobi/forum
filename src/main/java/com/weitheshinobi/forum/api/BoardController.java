@@ -1,4 +1,4 @@
-package com.weitheshinobi.forum.controller;
+package com.weitheshinobi.forum.api;
 
 import com.weitheshinobi.forum.service.BoardService;
 import com.weitheshinobi.forum.entity.Board;

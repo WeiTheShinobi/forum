@@ -64,10 +64,12 @@ class BoardServiceTest {
 
     @Test
     void updateBoard() {
-       when(boardRepository.findByBoardName("test1")).thenReturn(Optional.of(b1));
+        when(boardRepository.findByBoardName("test1")).thenReturn(Optional.of(b1));
 
-        Optional<Board> board = boardService.updateBoard("test1", "test3", true);
-        assertEquals("test3", board.get().getBoardName());
+        boolean isSuccess = boardService.updateBoard("test1", "test3", false);
+        assertTrue(isSuccess);
+        assertEquals("test3", b1.getBoardName());
+        assertFalse(b1.isOpen());
 
         verify(boardRepository).findByBoardName("test1");
     }

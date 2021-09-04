@@ -19,26 +19,26 @@ public class ForumApplication {
         SpringApplication.run(ForumApplication.class, args);
     }
 
-//    @Bean
-//    CommandLineRunner test(UserRepository userRepository, RoleRepository roleRepository, UserService userService, BoardService boardService) {
-//        return args -> {
-//            test2(userRepository, roleRepository, userService, boardService);
-//        };
-//    }
-//
-//    void test2(UserRepository userRepository,RoleRepository roleRepository,UserService userService, BoardService boardService) throws Exception {
-////        User user = new User();
-////        user.setEmail("123");
-////        userRepository.save(user);
-////        Role role = new Role();
-////        role.setName("test");
-////        roleRepository.save(role);
-//
-////        userService.addRoleToUser("456","test");
-//
-//
-////        boardService.updateBoard(3l,"aadsadadsasd5",true);
-//    }
+    @Bean
+    CommandLineRunner test(UserRepository userRepository, RoleRepository roleRepository, UserService userService, BoardService boardService) {
+        return args -> {
+            test2(userRepository, roleRepository, userService, boardService);
+        };
+    }
+
+    void test2(UserRepository userRepository,RoleRepository roleRepository,UserService userService, BoardService boardService) throws Exception {
+//        User user = new User();
+//        user.setEmail("123");
+//        userRepository.save(user);
+//        Role role = new Role();
+//        role.setName("test");
+//        roleRepository.save(role);
+
+//        userService.addRoleToUser("456","test");
+        boardService.createBoard("456");
+
+        boardService.updateBoard("456","123",true);
+    }
 
 
 }
