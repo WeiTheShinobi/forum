@@ -1,6 +1,6 @@
-package com.weitheshinobi.forum.comment;
+package com.weitheshinobi.forum.repository;
 
-import com.weitheshinobi.forum.comment.Comment;
+import com.weitheshinobi.forum.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

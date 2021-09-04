@@ -3,7 +3,6 @@ package com.weitheshinobi.forum.security;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,15 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${admin-password: 123456}")
     private String adminPassword;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.requestMatcher(EndpointRequest.toAnyEndpoint()).authorizeRequests()
-                .anyRequest().permitAll();
+        http.requestMatcher(EndpointRequest.toAnyEndpoint())
+                .authorizeRequests()
+                .anyRequest()
+                .permitAll();
     }
 
     @Bean

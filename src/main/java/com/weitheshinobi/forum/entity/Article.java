@@ -1,8 +1,5 @@
-package com.weitheshinobi.forum.article;
+package com.weitheshinobi.forum.entity;
 
-import com.weitheshinobi.forum.board.Board;
-import com.weitheshinobi.forum.comment.Comment;
-import com.weitheshinobi.forum.user.User;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,7 +11,7 @@ import java.util.*;
 
 @Data
 @Entity
-@Table(name = "forum_article")
+@Table
 @EntityListeners(AuditingEntityListener.class)
 public class Article {
 

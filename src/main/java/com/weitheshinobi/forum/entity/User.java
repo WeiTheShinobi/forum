@@ -1,8 +1,9 @@
-package com.weitheshinobi.forum.user;
+package com.weitheshinobi.forum.entity;
 
-import com.weitheshinobi.forum.article.Article;
-import com.weitheshinobi.forum.board.Board;
-import com.weitheshinobi.forum.comment.Comment;
+import com.weitheshinobi.forum.entity.Article;
+import com.weitheshinobi.forum.entity.Board;
+import com.weitheshinobi.forum.entity.Comment;
+import com.weitheshinobi.forum.entity.Role;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,7 +15,7 @@ import java.util.*;
 
 @Data
 @Entity
-@Table(name = "forum_user")
+@Table
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
@@ -35,20 +36,23 @@ public class User {
     @LastModifiedDate
     private Date lastOnlineDate;
 
-    @OneToMany(mappedBy = "user")
-    private List<Article> yourArticles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Comment> yourComments = new ArrayList<>();
+    private Collection<Article> yourArticles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private Collection<Comment> yourComments = new ArrayList<>();
 
     @ManyToMany
-    private Set<Article> followingArticles = new HashSet<>();
+    private Collection<Article> followingArticles = new HashSet<>();
 
     @ManyToMany
-    private Set<Article> likeArticle = new HashSet<>();
+    private Collection<Article> likeArticle = new HashSet<>();
 
     @ManyToMany
-    private Set<Board> followingBoard = new HashSet<>();
+    private Collection<Board> followingBoard = new HashSet<>();
 
 
 

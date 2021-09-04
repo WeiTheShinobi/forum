@@ -1,7 +1,5 @@
-package com.weitheshinobi.forum.comment;
+package com.weitheshinobi.forum.entity;
 
-import com.weitheshinobi.forum.article.Article;
-import com.weitheshinobi.forum.user.User;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,7 +12,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "forum_comment")
+@Table
 @EntityListeners(AuditingEntityListener.class)
 @EnableJpaAuditing
 public class Comment {

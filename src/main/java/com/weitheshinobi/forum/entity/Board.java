@@ -1,7 +1,5 @@
-package com.weitheshinobi.forum.board;
+package com.weitheshinobi.forum.entity;
 
-import com.weitheshinobi.forum.article.Article;
-import com.weitheshinobi.forum.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,7 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "forum_board")
+@Table
 public class Board {
 
     // ID 討論版名 討論版文章 版主
@@ -21,8 +19,8 @@ public class Board {
     protected Board() {
     }
 
-    public Board(String boradName, boolean isOpen) {
-        this.boradName = boradName;
+    public Board(String boardName, boolean isOpen) {
+        this.boardName = boardName;
         this.isOpen = isOpen;
     }
 
@@ -30,7 +28,7 @@ public class Board {
     @GeneratedValue
     private Long id;
     @Column(nullable = false)
-    private String boradName;
+    private String boardName;
     @Column(nullable = false)
     private boolean isOpen;
 
