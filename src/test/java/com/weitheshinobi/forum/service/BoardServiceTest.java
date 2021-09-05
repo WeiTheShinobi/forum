@@ -76,8 +76,7 @@ class BoardServiceTest {
 
     @Test
     void updateBoard_exception() {
-        assertThrows(EntityNotFoundException.class, () ->
-                boardService.updateBoard("test","tttt",true));
+        assertThrows(EntityNotFoundException.class, () -> boardService.updateBoard("test","tttt",true));
     }
 
 }

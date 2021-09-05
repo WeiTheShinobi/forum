@@ -58,10 +58,12 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void addRoleToUser(String email, String roleName) {
-        roleRepository.findByName(roleName).ifPresent(role ->
-                userRepository.findByEmail(email).ifPresent(user ->
-                        user.getRoles().add(role))
-        );
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new EntityNotFoundException("Role not found in database：" + roleName));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found in database：" + roleName));
+
+        user.getRoles().add(role);
     }
 
 }

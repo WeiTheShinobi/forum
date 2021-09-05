@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +64,20 @@ class UserServiceTest {
         userService.addRoleToUser("email", "role");
 
         assertIterableEquals(user.getRoles(), List.of(role));
+    }
+
+    @Test
+    void addRoleToUser_roleException() {
+        when(userRepository.findByEmail("email")).thenReturn(Optional.of(user));
+
+        assertThrows(EntityNotFoundException.class, () -> userService.addRoleToUser("email", "role"));
+    }
+
+    @Test
+    void addRoleToUser_userException() {
+        when(roleRepository.findByName("role")).thenReturn(Optional.of(role));
+
+        assertThrows(EntityNotFoundException.class, () -> userService.addRoleToUser("email", "role"));
     }
 
 }
