@@ -46,7 +46,7 @@ class BoardControllerTest {
         when(boardService.getBoardList()).thenReturn(bList);
         String bListJson = objectMapper.writeValueAsString(bList);
 
-        mockMvc.perform(get("/listBoard"))
+        mockMvc.perform(get("/boardlist"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

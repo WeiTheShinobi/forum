@@ -1,8 +1,10 @@
 package com.weitheshinobi.forum.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,14 +20,21 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN = "ADMIN";
-
-    private final PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Value("${admin-username: admin}")
     private String adminUsername;
     @Value("${admin-password: 123456}")
     private String adminPassword;
 
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder)
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,17 +48,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailsService authentication() {
         UserDetails admin = User.builder()
                 .username(adminUsername)
-                .password(pwEncoder.encode(adminPassword))
+                .password(passwordEncoder.encode(adminPassword))
                 .roles(ADMIN)
                 .build();
 
         UserDetails test = User.builder()
                 .username("test")
-                .password(pwEncoder.encode(adminPassword))
+                .password(passwordEncoder.encode(adminPassword))
                 .roles("test")
                 .build();
 
         return new InMemoryUserDetailsManager(admin, test);
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
 }

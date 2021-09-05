@@ -1,13 +1,11 @@
 package com.weitheshinobi.forum.entity;
 
-import com.weitheshinobi.forum.entity.Article;
-import com.weitheshinobi.forum.entity.Board;
-import com.weitheshinobi.forum.entity.Comment;
-import com.weitheshinobi.forum.entity.Role;
+
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.util.*;
@@ -17,6 +15,7 @@ import java.util.*;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
+@EnableJpaAuditing
 public class User {
 
     // 用戶 文章 討論版 文章 追蹤的文章 追蹤討論版 留言 版主

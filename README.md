@@ -12,6 +12,7 @@
 - Spring Data
 - Actuator 監控
 - 完整的 Unit Test
+- 美麗的程式碼、Lambda
 - Docker 容器化
 
 ## TODO

@@ -1,7 +1,6 @@
-package com.weitheshinobi.forum.reposity;
+package com.weitheshinobi.forum.repository;
 
 import com.weitheshinobi.forum.entity.Board;
-import com.weitheshinobi.forum.repository.BoardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

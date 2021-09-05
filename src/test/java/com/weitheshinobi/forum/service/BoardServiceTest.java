@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,10 +55,10 @@ class BoardServiceTest {
     }
 
     @Test
-    void createBoard() {
+    void saveBoard() {
         when(boardRepository.save(b1)).thenReturn(b1);
 
-        assertEquals(b1, boardService.createBoard("test1"));
+        assertEquals(b1, boardService.saveBoard("test1"));
 
         verify(boardRepository).save(b1);
     }
@@ -66,12 +67,17 @@ class BoardServiceTest {
     void updateBoard() {
         when(boardRepository.findByBoardName("test1")).thenReturn(Optional.of(b1));
 
-        boolean isSuccess = boardService.updateBoard("test1", "test3", false);
-        assertTrue(isSuccess);
+        boardService.updateBoard("test1", "test3", false);
         assertEquals("test3", b1.getBoardName());
         assertFalse(b1.isOpen());
 
         verify(boardRepository).findByBoardName("test1");
+    }
+
+    @Test
+    void updateBoard_exception() {
+        assertThrows(EntityNotFoundException.class, () ->
+                boardService.updateBoard("test","tttt",true));
     }
 
 }
