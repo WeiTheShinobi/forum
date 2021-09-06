@@ -6,10 +6,12 @@ import com.weitheshinobi.forum.repository.RoleRepository;
 import com.weitheshinobi.forum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -21,10 +23,10 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private UserRepository userRepository;
+
+    private @Autowired RoleRepository roleRepository;
+    private @Autowired UserRepository userRepository;
+    private @Autowired PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String useremail) throws UsernameNotFoundException {
@@ -43,11 +45,12 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getUserList(int page) {
-        return userRepository.findAll(PageRequest.of(page, 30)).getContent();
+        return userRepository.findAll(PageRequest.of(page, 30, Sort.Direction.ASC)).getContent();
     }
 
     @Transactional
     public User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

@@ -76,6 +76,8 @@ class BoardServiceTest {
 
     @Test
     void updateBoard_exception() {
+        when(boardRepository.findByBoardName("test1")).thenReturn(Optional.ofNullable(null));
+
         assertThrows(EntityNotFoundException.class, () -> boardService.updateBoard("test","tttt",true));
     }
 
