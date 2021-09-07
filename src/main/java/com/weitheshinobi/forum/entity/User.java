@@ -15,7 +15,7 @@ import java.util.*;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing
+
 public class User {
 
     // 用戶 文章 討論版 文章 追蹤的文章 追蹤討論版 留言 版主
@@ -28,7 +28,7 @@ public class User {
     @GeneratedValue
     private Long id;
     private String nickname;
-    private String email;
+    private String username;
     private String password;
     @CreatedDate
     private Date createdDate;

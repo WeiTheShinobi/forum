@@ -22,30 +22,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService  {
 
     private @Autowired RoleRepository roleRepository;
     private @Autowired UserRepository userRepository;
     private @Autowired PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String useremail) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(useremail).orElseThrow(
-                () -> new EntityNotFoundException("user not found in database")
-        );
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
-    }
-
-    public Optional<User> getUser(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> getUser(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public List<User> getUserList(int page) {
-        return userRepository.findAll(PageRequest.of(page, 30, Sort.Direction.ASC)).getContent();
+        return userRepository.findAll(PageRequest.of(page, 30, Sort.Direction.ASC, "createdDate")).getContent();
     }
 
     @Transactional
@@ -60,11 +48,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void addRoleToUser(String email, String roleName) {
+    public void addRoleToUser(String username, String roleName) {
         Role role = roleRepository.findByName(roleName)
-                .orElseThrow(() -> new EntityNotFoundException("Role not found in database：" + roleName));
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("User not found in database：" + roleName));
+                .orElseThrow(() -> new EntityNotFoundException("Role not found in database , role name ： " + roleName));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found in database , username ： " + username));
 
         user.getRoles().add(role);
     }

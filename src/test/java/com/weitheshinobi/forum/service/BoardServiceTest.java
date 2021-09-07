@@ -58,7 +58,7 @@ class BoardServiceTest {
     void saveBoard() {
         when(boardRepository.save(b1)).thenReturn(b1);
 
-        assertEquals(b1, boardService.saveBoard("test1"));
+        assertEquals(b1, boardService.saveBoard(b1));
 
         verify(boardRepository).save(b1);
     }

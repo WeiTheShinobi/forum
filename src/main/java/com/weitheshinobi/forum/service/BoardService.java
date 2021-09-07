@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BoardService {
 
-    @Autowired
-    private BoardRepository boardRepository;
+    private @Autowired BoardRepository boardRepository;
 
     public List<Board> getBoardList() {
         return boardRepository.findAll();
@@ -30,8 +28,8 @@ public class BoardService {
     }
 
     @Transactional
-    public Board saveBoard(String boardName) {
-        return boardRepository.save(new Board(boardName, true));
+    public Board saveBoard(Board board) {
+        return boardRepository.save(board);
     }
 
     /**
@@ -50,7 +48,7 @@ public class BoardService {
                     board.setBoardName(newName);
                     board.setOpen(isOpen);
                 }, () -> {
-                    throw new EntityNotFoundException("board not found, boardName：" + queryName);
+                    throw new EntityNotFoundException("board not found, boardName : " + queryName);
                 });
     }
 

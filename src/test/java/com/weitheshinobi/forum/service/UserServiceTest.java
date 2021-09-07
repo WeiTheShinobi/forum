@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.persistence.EntityNotFoundException;
@@ -36,7 +35,7 @@ class UserServiceTest {
         role = new Role();
         role.setName("role");
         user = new User();
-        user.setEmail("email");
+        user.setUsername("username");
     }
 
     @Test
@@ -59,25 +58,25 @@ class UserServiceTest {
     @Test
     void addRoleToUser() {
         when(roleRepository.findByName("role")).thenReturn(Optional.of(role));
-        when(userRepository.findByEmail("email")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("username")).thenReturn(Optional.of(user));
 
-        userService.addRoleToUser("email", "role");
+        userService.addRoleToUser("username", "role");
 
         assertIterableEquals(user.getRoles(), List.of(role));
     }
 
     @Test
     void addRoleToUser_roleException() {
-        when(userRepository.findByEmail("email")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("username")).thenReturn(Optional.of(user));
 
-        assertThrows(EntityNotFoundException.class, () -> userService.addRoleToUser("email", "role"));
+        assertThrows(EntityNotFoundException.class, () -> userService.addRoleToUser("username", "role"));
     }
 
     @Test
     void addRoleToUser_userException() {
         when(roleRepository.findByName("role")).thenReturn(Optional.of(role));
 
-        assertThrows(EntityNotFoundException.class, () -> userService.addRoleToUser("email", "role"));
+        assertThrows(EntityNotFoundException.class, () -> userService.addRoleToUser("username", "role"));
     }
 
 }
