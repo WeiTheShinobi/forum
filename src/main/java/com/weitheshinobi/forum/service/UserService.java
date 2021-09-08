@@ -7,17 +7,11 @@ import com.weitheshinobi.forum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +27,7 @@ public class UserService  {
     }
 
     public List<User> getUserList(int page) {
-        return userRepository.findAll(PageRequest.of(page, 30, Sort.Direction.ASC, "createdDate")).getContent();
+        return userRepository.findAll(PageRequest.of(page, 50, Sort.Direction.DESC, "createdDate")).getContent();
     }
 
     @Transactional

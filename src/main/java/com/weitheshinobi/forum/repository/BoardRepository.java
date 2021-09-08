@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    List<Board> findByBoardNameLike(String boardName);
+    List<Board> findByBoardNameContains (String boardName);
 
     Optional<Board> findByBoardName(String boardName);
 

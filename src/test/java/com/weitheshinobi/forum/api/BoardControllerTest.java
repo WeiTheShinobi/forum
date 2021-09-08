@@ -31,7 +31,6 @@ class BoardControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private BoardService boardService;
-
     private Board b1, b2;
     private List<Board> bList;
 

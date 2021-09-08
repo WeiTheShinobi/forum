@@ -20,11 +20,11 @@ public class BoardService {
 
     /**
      * @param boardNameQuery 查詢的 string
-     * @return 模糊查詢的 Board List
+     * @return 模糊查詢的 Board List，輸入 "" 會列出全部
      */
 
     public List<Board> getBoardListByBoardName(String boardNameQuery) {
-        return boardRepository.findByBoardNameLike("%" + boardNameQuery + "%");
+        return boardRepository.findByBoardNameContains(boardNameQuery);
     }
 
     @Transactional

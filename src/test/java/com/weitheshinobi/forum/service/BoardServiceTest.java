@@ -40,18 +40,12 @@ class BoardServiceTest {
         assertEquals(bList, boardService.getBoardList());
     }
 
-//  測試：需要有模糊搜尋
 
     @Test
     void getBoardListByBoardName() {
-        String queryString = "test";
-        when(boardRepository.findByBoardNameLike("%" + queryString + "%"))
-                .thenReturn(bList);
+        when(boardRepository.findByBoardNameContains(anyString())).thenReturn(bList);
 
-        assertEquals(bList, boardService.getBoardListByBoardName(queryString));
-
-        verify(boardRepository).findByBoardNameLike("%" + queryString + "%");
-        verify(boardRepository, never()).findByBoardNameLike(queryString);
+        assertEquals(bList, boardService.getBoardListByBoardName(anyString()));
     }
 
     @Test

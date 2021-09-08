@@ -38,5 +38,4 @@ public class Board {
     @ManyToMany(mappedBy = "followingBoard")
     private Set<User> followers = new HashSet<>();
 
-
 }
