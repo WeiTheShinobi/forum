@@ -22,8 +22,9 @@ public class UserService  {
     private @Autowired UserRepository userRepository;
     private @Autowired PasswordEncoder passwordEncoder;
 
-    public Optional<User> getUser(String username) {
-        return userRepository.findByUsername(username);
+    public User getUser(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found in database , username ： " + username));
     }
 
     public List<User> getUserList(int page) {

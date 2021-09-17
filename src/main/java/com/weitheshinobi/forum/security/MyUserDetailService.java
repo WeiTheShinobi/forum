@@ -21,7 +21,7 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new EntityNotFoundException("user not found in database, username : " + username)
+                () -> new EntityNotFoundException("User not found in database, username : " + username)
         );
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {

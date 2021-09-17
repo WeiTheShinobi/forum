@@ -2,17 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>我ㄉ論壇</title>
+    <title>看板</title>
 </head>
 <body>
+<h1 th:text="${boardName}"></h1>
 
-<div>
-    <h2>看板</h2>
-    <div id="boardlist"></div>
 
-</div>
 
 <script src="../static/js/lib/jquery.js" th:src="@{/js/lib/jquery.js}"></script>
-<script src="../static/js/index.js" th:src="@{/js/index.js}"></script>
+<script src="../static/js/index.js" th:src="@{/js/board.js}"></script>
 </body>
 </html>

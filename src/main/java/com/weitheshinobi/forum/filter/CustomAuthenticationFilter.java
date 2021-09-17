@@ -21,10 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.weitheshinobi.forum.filter.SecurityConstant.HMAC256_SECRET;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private static final int ACCESS_TOKEN_TIME = 24 * 60 * 60 * 1000;
+    private static final int REFRESH_TOKEN_TIME = 24 * 60 * 60 * 1000;
 
     private AuthenticationManager authenticationManager;
 
@@ -43,16 +47,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User) authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(HMAC256_SECRET.getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_TIME))
                 .withIssuer(request.getRequestURI())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_TIME))
                 .withIssuer(request.getRequestURI())
                 .sign(algorithm);
 

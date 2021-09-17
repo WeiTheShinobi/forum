@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,7 +23,7 @@ class BoardServiceTest {
     @Mock
     private BoardRepository boardRepository;
 
-    private Board b1, b2;
+    private Board b1, b2, b3;
     private List<Board> bList;
 
     @BeforeEach
@@ -30,14 +31,22 @@ class BoardServiceTest {
         MockitoAnnotations.openMocks(this);
         b1 = new Board("test1", true);
         b2 = new Board("test2", true);
-        bList = List.of(b1, b2);
+        b3 = new Board("test3", false);
+        bList = List.of(b1, b2, b3);
     }
 
     @Test
     void getBoardList() {
-        when(boardRepository.findAll()).thenReturn(bList);
+        List<Board> onlyOpenBoard = bList.stream().filter(b -> b.isOpen() == true).collect(Collectors.toList());
+        when(boardRepository.findByisOpenIsTrue()).thenReturn(onlyOpenBoard);
+        List<Board> testBoardList = boardService.getBoardList();
 
-        assertEquals(bList, boardService.getBoardList());
+        assertEquals(onlyOpenBoard, testBoardList);
+        testBoardList.forEach(board -> {
+            if (!board.isOpen()) fail("All object board's isOpen attribute should be true");
+        });
+
+        verify(boardRepository).findByisOpenIsTrue();
     }
 
 

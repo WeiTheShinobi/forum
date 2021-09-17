@@ -27,15 +27,13 @@ public class Board {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false)
     private String boardName;
-    @Column(nullable = false)
     private boolean isOpen;
 
-    @OneToMany(mappedBy = "board")
-    private List<Article> articles = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<Article> articles = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "followingBoard")
-    private Set<User> followers = new HashSet<>();
+//    @ManyToMany(mappedBy = "followingBoard")
+//    private Set<User> followers = new HashSet<>();
 
 }

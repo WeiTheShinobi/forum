@@ -12,6 +12,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     List<Board> findByBoardNameContains (String boardName);
 
+    List<Board> findByisOpenIsTrue();
+
     Optional<Board> findByBoardName(String boardName);
 
 }

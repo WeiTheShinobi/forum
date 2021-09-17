@@ -8,7 +8,7 @@
 
 ## 特色
 
-- Spring Security + JWT 認證授權 製作中
+- Spring Security + JWT
 - Spring Data
 - Actuator 監控
 - 完整的 Unit Test
@@ -19,4 +19,6 @@
 
 - 註冊與郵件認證
 - Redis Cache
+- JWT refresh token
+- HTTPS
 

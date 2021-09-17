@@ -15,12 +15,12 @@ public class BoardService {
     private @Autowired BoardRepository boardRepository;
 
     public List<Board> getBoardList() {
-        return boardRepository.findAll();
+        return boardRepository.findByisOpenIsTrue();
     }
 
     /**
      * @param boardNameQuery 查詢的 string
-     * @return 模糊查詢的 Board List，輸入 "" 會列出全部
+     * @return 模糊查詢的 Board List
      */
 
     public List<Board> getBoardListByBoardName(String boardNameQuery) {

@@ -9,12 +9,18 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +32,8 @@ class UserServiceTest {
     private RoleRepository roleRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     private Role role;
     private User user;
 
@@ -36,23 +44,46 @@ class UserServiceTest {
         role.setName("role");
         user = new User();
         user.setUsername("username");
+        user.setPassword("password");
     }
 
     @Test
     void getUser() {
+        when(userRepository.findByUsername("username")).thenReturn(Optional.of(user));
+
+        User testUser = userService.getUser("username");
+        assertEquals(user, testUser);
+    }
+
+    @Test
+    void getUser_Exception() {
+        assertThrows(EntityNotFoundException.class, () -> userService.getUser(anyString()));
     }
 
     @Test
     void getUserList() {
+        when(userRepository.findAll(PageRequest.of(10, 50, Sort.Direction.DESC, "createdDate"))).thenReturn(Page.empty());
+
+        userService.getUserList(10);
+
+        verify(userRepository).findAll(PageRequest.of(10, 50, Sort.Direction.DESC, "createdDate"));
     }
 
     @Test
     void saveUser() {
+        when(passwordEncoder.encode(user.getPassword())).thenReturn("encodePassword");
 
+        userService.saveUser(user);
+
+        assertEquals("encodePassword", user.getPassword());
+        verify(passwordEncoder).encode(anyString());
     }
 
     @Test
     void saveRole() {
+        when(roleRepository.save(role)).thenReturn(role);
+        assertEquals(role, userService.saveRole(role));
+        verify(roleRepository).save(role);
     }
 
     @Test

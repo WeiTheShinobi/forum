@@ -3,12 +3,10 @@ package com.weitheshinobi.forum.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weitheshinobi.forum.entity.Board;
 import com.weitheshinobi.forum.service.BoardService;
-import com.weitheshinobi.forum.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -48,7 +46,7 @@ class BoardControllerTest {
         when(boardService.getBoardList()).thenReturn(bList);
         String bListJson = objectMapper.writeValueAsString(bList);
 
-        mockMvc.perform(get("/boardlist"))
+        mockMvc.perform(get("/api/boardlist"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
